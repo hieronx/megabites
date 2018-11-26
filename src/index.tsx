@@ -1,13 +1,13 @@
 import * as React from "react";
 import {render} from "react-dom";
 import {AppContainer} from "react-hot-loader";
-import App from "./components/App";
+import AppRouter from "./components/AppRouter";
 
 const rootEl = document.getElementById("root");
 
 render(
     <AppContainer>
-        <App/>
+        <AppRouter/>
     </AppContainer>,
     rootEl
 );
@@ -16,8 +16,8 @@ render(
 declare let module: { hot: any };
 
 if (module.hot) {
-    module.hot.accept("./components/App", () => {
-        const NewApp = require("./components/App").default;
+    module.hot.accept("./components/AppRouter", () => {
+        const NewAppRouter = require("./components/AppRouter").default;
 
         render(
             <AppContainer>

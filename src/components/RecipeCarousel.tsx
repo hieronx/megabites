@@ -1,5 +1,6 @@
 import * as React from "react";
 import "./../assets/scss/RecipeCarousel.scss";
+import { Link } from "react-router-dom";
 
 const reactLogo = require("./../assets/img/react_logo.svg");
 
@@ -20,7 +21,7 @@ export default class RecipeCarousel extends React.Component<RecipeCarouselProps,
                             </div>
                             <div className="tile__details">
                             <div className="tile__title">
-                                Smothered Chicken
+                                <Link to={`/recipes/3`}>Smothered Chicken</Link>
                             </div>
                             </div>
                         </div>
