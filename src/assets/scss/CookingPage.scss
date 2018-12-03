@@ -1,7 +1,14 @@
+html,body {
+    margin: 0;
+    padding: 0;
+    background: #EFEFEF;
+}
+
 .app {
     font-family: helvetica, arial, sans-serif;
-    padding: 0;
-    margin: 0 20px;
+    padding: 0 20px;
+    margin: 0;
+    height: 100%;
 }
 
 .card {
@@ -14,4 +21,34 @@
     flex-direction: column;
     justify-content: center;
     margin: 0 auto;
+    background: #FFF;
+    line-height: 2em;
+
+    h2 {
+        line-height: 2em;
+    }
+}
+
+.previous-button {
+    position: absolute;
+    top: 40%;
+    left: 40px;
+    background: #ddd;
+    padding: 20px;
+    border-radius: 100%;
+    font-size: 30px;
+    text-decoration: none;
+    color: #333;
+}
+
+.next-button {
+    position: absolute;
+    top: 40%;
+    right: 40px;
+    background: #ddd;
+    padding: 20px;
+    border-radius: 100%;
+    font-size: 30px;
+    text-decoration: none;
+    color: #333;
 }

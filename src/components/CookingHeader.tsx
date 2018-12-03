@@ -12,11 +12,11 @@ export default class CookingHeader extends React.Component<CookingHeaderProps, u
         return (
             <header>
                 <div className="logo">
-                    <h1>Recipe name</h1>
+                    <h1>Spaghetti Aglio e Olio</h1>
                 </div>
 
                 <div className="nav">
-                   10 mins
+                    <Link to="/recipes/3" className="close-button">&times;</Link>
                 </div>
             </header>
         );

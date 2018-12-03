@@ -3,11 +3,28 @@ header {
   
     .logo {
       flex: 2;
+      padding: 10px 0 0 20px;
+
+      a {
+        text-decoration: none;
+        color: #333;
+      }
     }
   
     .nav {
       flex: 1;
       padding-top: 10px;
+      height: 120px;
+    }
+
+    .close-button {
+      border-radius: 100%;
+      font-size: 50px;
+      text-decoration: none;
+      color: #333;
+      position: absolute;
+      top: 20px;
+      right: 40px;
     }
   }
   

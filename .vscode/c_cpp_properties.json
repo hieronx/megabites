@@ -6,7 +6,13 @@
                 "/Users/jeroen/Library/Arduino15/packages/esp8266/tools/**",
                 "/Users/jeroen/Library/Arduino15/packages/esp8266/hardware/esp8266/2.4.2/**"
             ],
-            "forcedInclude": []
+            "forcedInclude": [],
+            "macFrameworkPath": [
+                "/System/Library/Frameworks",
+                "/Library/Frameworks"
+            ],
+            "intelliSenseMode": "clang-x64"
         }
-    ]
+    ],
+    "version": 4
 }
