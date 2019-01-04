@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react'
 
 import "./../assets/scss/CookingPage.scss";
 import CookingHeader from "./CookingHeader";
+import { Step } from '../stores/ItemStore'
 import { RootStore } from '../stores/RootStore'
 import { inject } from "mobx-react";
 
@@ -15,7 +16,7 @@ export interface CookingPageProps {
 @observer
 export default class CookingPage extends React.Component<CookingPageProps, undefined> {
 
-    currentStep: number = 0;
+    stepIndex: number = 0;
 
     enableSound: boolean = false;
 
@@ -24,18 +25,18 @@ export default class CookingPage extends React.Component<CookingPageProps, undef
     }
 
     goToNextStep = () => {
-        this.currentStep++;
+        this.stepIndex++;
         this.speakCurrentStep();
     }
 
     goToPreviousStep = () => {
-        if (this.currentStep > 0) this.currentStep--;
+        if (this.stepIndex > 0) this.stepIndex--;
         this.speakCurrentStep();
     }
     
     speakCurrentStep = () => {
         if (this.enableSound) {
-            let msg = new SpeechSynthesisUtterance(this.steps[this.currentStep]);
+            let msg = new SpeechSynthesisUtterance(this.currentStep().description);
             const voices = window.speechSynthesis.getVoices();
             if (voices[32]) msg.voice = voices[32];
             window.speechSynthesis.speak(msg);
@@ -54,12 +55,19 @@ export default class CookingPage extends React.Component<CookingPageProps, undef
 
     steps = (): Step[] => {
         const itemId = this.props.match.params.id
-        console.log(this.props.store!.itemStore.items.get(itemId).steps)
         return this.props.store!.itemStore.items.get(itemId).steps
     }
 
+    currentStep = (): Step => {
+        return this.props.store.itemStore.getStep(this.props.match.params.id, this.stepIndex)
+    }
+
+    expandCurrentStep = () => {
+        this.props.store.itemStore.expandStep(this.props.match.params.id, this.stepIndex)
+    }
+
     getProgressAsPercentage = () => {
-        return Math.floor((this.currentStep / (this.steps.length - 1)) * 100) + '%'
+        return Math.floor((this.stepIndex / (this.steps().length - 1)) * 100) + '%'
     }
 
     render() {
@@ -69,17 +77,24 @@ export default class CookingPage extends React.Component<CookingPageProps, undef
 
                 <div className="content">
                     <div className="card">
+                        {this.currentStep() && this.currentStep().imageUrl &&
+                            <img src={this.currentStep().imageUrl} />
+                        }
                         <h2>
-                            {this.steps()[this.currentStep].description}
+                            {this.currentStep() && this.currentStep().description}
                         </h2>
+
+                        {this.currentStep() && this.currentStep().expandedSteps && this.currentStep().expandedSteps.length > 0 &&
+                            <a onClick={() => this.expandCurrentStep()}>Expand this step</a>
+                        }
                     </div>
                 </div>
 
-                {this.currentStep > 0 &&
+                {this.stepIndex > 0 &&
                     <a href="#" onClick={() => this.goToPreviousStep()} className="previous-button">&larr;</a>
                 }
 
-                {this.currentStep < (this.steps().length - 1) &&
+                {this.stepIndex < (this.steps().length - 1) &&
                     <a href="#" onClick={() => this.goToNextStep()} className="next-button">&rarr;</a>
                 }
 

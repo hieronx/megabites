@@ -25,6 +25,13 @@ html,body {
     background: #FFF;
     line-height: 2em;
 
+    img {
+        margin: 0 auto;
+        object-fit: cover;
+        width: 50%;
+        height: auto;
+    }
+
     h2 {
         line-height: 2em;
         font-family: 'Archivo Black', serif;

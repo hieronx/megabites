@@ -8,7 +8,9 @@ const uuidv4 = () => {
 }
 
 export const Step = t.model('Step', {
-  description: t.string
+  description: t.string,
+  imageUrl: t.maybe(t.string),
+  expandedSteps: t.optional(t.array(t.late(() => Step)), [])
 })
 
 export type Step = typeof Step.Type;
@@ -32,11 +34,28 @@ export const ItemStore = t.model('ItemStore', {
   },
   byListId(listId: string): Item[] {
     return values(self.items).filter((item: Item) => item.listId === listId) as Item[]
+  },
+  getStep(itemId: string, stepIndex: number): Step {
+    return self.items.has(itemId) && self.items.get(itemId).steps.length >= stepIndex ? self.items.get(itemId).steps[stepIndex] : undefined
   }
 }))
 .actions((self: any) => ({
   create(name: string, imageUrl: string, listId: string, steps: Step[]): void {
-    self.items.put({ id: uuidv4(), name: name, imageUrl: imageUrl, listId: listId, steps: steps })
+    const newItemId = uuidv4()
+    self.items.put({ id: newItemId, name: name, imageUrl: imageUrl, listId: listId, steps: steps })
+    return newItemId
+  },
+
+  expandStep(itemId: string, stepIndex: number) {
+    const item = self.items.get(itemId)
+    if (item) {
+      if (item.steps[stepIndex] && item.steps[stepIndex].expandedSteps.length > 0) {
+        console.log(item.steps.map((step: Step) => step.description))
+        const copiedSteps = item.steps[stepIndex].expandedSteps.map((step: Step) => JSON.parse(JSON.stringify(step)))
+        item.steps.splice(stepIndex, 1, ...copiedSteps)
+        console.log(item.steps.map((step: Step) => step.description))
+      }
+    }
   }
 }))
 

@@ -49,8 +49,8 @@ export default class RecipeCarousel extends React.Component<Props, undefined> {
 
                 <div className="row">
                     <div className="row__inner">
-                        {shuffle(this.props.items).map((item: any) =>
-                            <div className="tile">
+                        {this.props.items.map((item: any) =>
+                            <div className="tile" key={item.id}>
                                 <div className="tile__media">
                                     <img src={item.imageUrl} alt="" className="tile__img" />
                                 </div>
@@ -68,22 +68,22 @@ export default class RecipeCarousel extends React.Component<Props, undefined> {
     }
 }
 
-function shuffle(array: any[]) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+// function shuffle(array: any[]) {
+//     var currentIndex = array.length, temporaryValue, randomIndex;
   
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
+//     // While there remain elements to shuffle...
+//     while (0 !== currentIndex) {
   
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
+//       // Pick a remaining element...
+//       randomIndex = Math.floor(Math.random() * currentIndex);
+//       currentIndex -= 1;
   
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
+//       // And swap it with the current element.
+//       temporaryValue = array[currentIndex];
+//       array[currentIndex] = array[randomIndex];
+//       array[randomIndex] = temporaryValue;
+//     }
   
-    return array;
-  }
+//     return array;
+//   }
   

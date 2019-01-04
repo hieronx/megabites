@@ -4,8 +4,15 @@ import { ListStore } from './ListStore'
 import { ItemStore, Step } from './ItemStore'
 
 const pastaAglioEOlioSteps: Step[] = [
-    Step.create({ description: 'Bring a large pot of lightly salted water to a boil.' }),
-    Step.create({ description: 'Cook spaghetti in the boiling water, stirring occasionally until cooked through but firm to the bite, about 12 minutes.' }),
+    Step.create({ description: 'Bring a large pot of lightly salted water to a boil.', imageUrl: 'https://c1.staticflickr.com/6/5263/5678713590_12780c7907_b.jpg' }),
+    Step.create({ description: 'Cook the spaghetti.',
+      expandedSteps: [
+        Step.create({ description: 'Add spaghetti to the large pot that is now boiling.' }),
+        Step.create({ description: 'Make sure the spaghetti is fully under the water..' }),
+        Step.create({ description: 'Stir occassionally.' }),
+        Step.create({ description: 'Wait until the pasta is cooked through but firm to the bite, about 12 minutes..' })
+      ]
+    }),
     Step.create({ description: 'Drain and transfer to a pasta bowl.' }),
     Step.create({ description: 'Combine garlic and olive oil in a cold skillet.' }),
     Step.create({ description: 'Cook over medium heat to slowly toast garlic, about 10 minutes.' }),
@@ -33,7 +40,7 @@ export const RootStore = t.model('RootStore', {
 
         const classicsListId = self.listStore.create('Classic pastas')
         self.itemStore.create('Spaghetti aglio e olio', 'https://s23209.pcdn.co/wp-content/uploads/2018/02/Aglio-e-OlioIMG_3194-360x360.jpg', classicsListId, [])
-        self.itemStore.create('Spaghetti aglio e olio', 'https://s23209.pcdn.co/wp-content/uploads/2018/02/Aglio-e-OlioIMG_3194-360x360.jpg', classicsListId, pastaAglioEOlioSteps)
+        console.log(self.itemStore.create('Spaghetti aglio e olio', 'https://s23209.pcdn.co/wp-content/uploads/2018/02/Aglio-e-OlioIMG_3194-360x360.jpg', classicsListId, pastaAglioEOlioSteps))
         self.itemStore.create('Spaghetti aglio e olio', 'https://s23209.pcdn.co/wp-content/uploads/2018/02/Aglio-e-OlioIMG_3194-360x360.jpg', classicsListId, [])
         self.itemStore.create('Spaghetti aglio e olio', 'https://s23209.pcdn.co/wp-content/uploads/2018/02/Aglio-e-OlioIMG_3194-360x360.jpg', classicsListId, [])
         self.itemStore.create('Spaghetti aglio e olio', 'https://s23209.pcdn.co/wp-content/uploads/2018/02/Aglio-e-OlioIMG_3194-360x360.jpg', classicsListId, [])
