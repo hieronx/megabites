@@ -40,6 +40,30 @@ html,body {
     }
 }
 
+.timer {
+    margin: 40px 20px;
+    
+    .name {
+        display: block;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 12px;
+        color: #999;
+        text-align: center;
+        margin-bottom: 4px;
+    }
+
+    .timeLeft {
+        display: block;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 32px;
+        color: #333;
+        text-align: center;
+        margin-bottom: 4px;
+    }
+}
+
 .previous-button {
     position: absolute;
     top: 40%;

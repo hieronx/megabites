@@ -7,10 +7,18 @@ const uuidv4 = () => {
   )
 }
 
+export const Timer = t.model('Timer', {
+  name: t.string,
+  duration: t.number
+})
+
+export type Timer = typeof Timer.Type;
+
 export const Step = t.model('Step', {
   description: t.string,
   imageUrl: t.maybe(t.string),
-  expandedSteps: t.optional(t.array(t.late(() => Step)), [])
+  expandedSteps: t.optional(t.array(t.late(() => Step)), []),
+  backgroundTimer: t.maybe(Timer)
 })
 
 export type Step = typeof Step.Type;
