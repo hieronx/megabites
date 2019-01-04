@@ -2,12 +2,17 @@ import * as React from "react";
 import {render} from "react-dom";
 import {AppContainer} from "react-hot-loader";
 import AppRouter from "./components/AppRouter";
+import "./assets/scss/App.scss";
+import { Provider } from 'mobx-react'
+import { store } from './store'
 
 const rootEl = document.getElementById("root");
 
 render(
     <AppContainer>
-        <AppRouter/>
+        <Provider store={store}>
+            <AppRouter/>
+        </Provider>
     </AppContainer>,
     rootEl
 );
@@ -21,7 +26,9 @@ if (module.hot) {
 
         render(
             <AppContainer>
-                <NewAppRouter/>
+                <Provider store={store}>
+                    <NewAppRouter/>
+                </Provider>
             </AppContainer>,
             rootEl
         );

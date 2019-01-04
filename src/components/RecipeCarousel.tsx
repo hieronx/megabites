@@ -2,12 +2,17 @@ import * as React from "react";
 import "./../assets/scss/RecipeCarousel.scss";
 import { Link } from "react-router-dom";
 
+import { Item } from '../stores/ItemStore'
+
 const reactLogo = require("./../assets/img/react_logo.svg");
 
-export interface RecipeCarouselProps {
+export interface Props {
+    name: string;
+    items: Item[];
 }
 
-export default class RecipeCarousel extends React.Component<RecipeCarouselProps, undefined> {
+
+export default class RecipeCarousel extends React.Component<Props, undefined> {
 
     recipes = [
         {
@@ -40,18 +45,18 @@ export default class RecipeCarousel extends React.Component<RecipeCarouselProps,
     render() {
         return (
             <section>
-                <h2>Times Classics</h2>
+                <h2>{this.props.name}</h2>
 
                 <div className="row">
                     <div className="row__inner">
-                        {shuffle(this.recipes).map((recipe: any) =>
+                        {shuffle(this.props.items).map((item: any) =>
                             <div className="tile">
                                 <div className="tile__media">
-                                    <img src={recipe.imageUrl} alt="" className="tile__img" />
+                                    <img src={item.imageUrl} alt="" className="tile__img" />
                                 </div>
-                                <Link to={`/recipes/` + recipe.id} className="tile__details">
+                                <Link to={`/recipes/` + item.id} className="tile__details">
                                     <div className="tile__title">
-                                        <Link to={`/recipes/` + recipe.id}>{recipe.title}</Link>
+                                        <Link to={`/recipes/` + item.id}>{item.name}</Link>
                                     </div>
                                 </Link>
                             </div>

@@ -14,7 +14,8 @@ html,body {
 .card {
     width: 400px;
     height: 400px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    border-radius: 6px;
+    box-shadow: 0 8px 24px 0 rgba(0,0,0,0.12);
     padding: 40px;
     text-align: center;
     display: flex;
@@ -26,6 +27,9 @@ html,body {
 
     h2 {
         line-height: 2em;
+        font-family: 'Archivo Black', serif;
+        font-weight: normal;
+        font-size: 22px;
     }
 }
 
@@ -51,4 +55,24 @@ html,body {
     font-size: 30px;
     text-decoration: none;
     color: #333;
+}
+
+.progress-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 12px;
+    background: #D4F8FF;
+    width: 100%;
+    z-index: 1;
+
+    .completed-progress {
+        width: 0%;
+        background: #25D7FF;
+        z-index: 2;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 12px;
+    }
 }

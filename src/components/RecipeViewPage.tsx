@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 const reactLogo = require("./../assets/img/react_logo.svg");
 
 export interface RecipeViewPageProps {
+    match: any;
 }
 
 export default class RecipeViewPage extends React.Component<RecipeViewPageProps, undefined> {
@@ -17,7 +18,7 @@ export default class RecipeViewPage extends React.Component<RecipeViewPageProps,
 
                 <div className="sm-content">
                     <div className="top-box">
-                        <div className="highlights">
+                        <div className="inline-card highlights">
                             <h2>Spaghetti Aglio e Olio</h2>
                             
                             <div className="numbers">
@@ -26,7 +27,7 @@ export default class RecipeViewPage extends React.Component<RecipeViewPageProps,
                                 </div>
                             </div>
 
-                            <Link to="/recipes/3/cooking">
+                            <Link to={"/recipes/" + this.props.match.params.id + "/cooking"}>
                                 <div className="btn-primary">
                                     Start cooking
                                 </div>
@@ -44,7 +45,7 @@ export default class RecipeViewPage extends React.Component<RecipeViewPageProps,
                     </div>
 
                     <div className="recipe-details">
-                        <div className="ingredient-list">
+                        <div className="inline-card ingredient-list">
                             <h2>Ingredients</h2>
                             <ul>
                                 <li>500g spaghetti</li>
@@ -57,14 +58,14 @@ export default class RecipeViewPage extends React.Component<RecipeViewPageProps,
                             </ul>
                         </div>
 
-                        <div className="steps">
+                        <div className="inline-card steps">
                             <h2>Steps</h2>
                             <ol>
-                                <li>Bring a large pot of lightly salted water to a boil. Cook spaghetti in the boiling water, stirring occasionally until cooked through but firm to the bite, about 12 minutes. Drain and transfer to a pasta bowl.</li>
-                                <li>Combine garlic and olive oil in a cold skillet. Cook over medium heat to slowly toast garlic, about 10 minutes. Reduce heat to medium-low when olive oil begins to bubble.</li>
-                                <li>Cook and stir until garlic is golden brown, about another 5 minutes. Remove from heat.</li>
-                                <li>Stir red pepper flakes, black pepper, and salt into the pasta. Pour in olive oil and garlic, and sprinkle on Italian parsley and half of the Parmigiano-Reggiano cheese; stir until combined.</li>
-                                <li>Serve pasta topped with the remaining Parmigiano-Reggiano cheese.</li>
+                                <li><span>Bring a large pot of lightly salted water to a boil. Cook spaghetti in the boiling water, stirring occasionally until cooked through but firm to the bite, about 12 minutes. Drain and transfer to a pasta bowl.</span></li>
+                                <li><span>Combine garlic and olive oil in a cold skillet. Cook over medium heat to slowly toast garlic, about 10 minutes. Reduce heat to medium-low when olive oil begins to bubble.</span></li>
+                                <li><span>Cook and stir until garlic is golden brown, about another 5 minutes. Remove from heat.</span></li>
+                                <li><span>Stir red pepper flakes, black pepper, and salt into the pasta. Pour in olive oil and garlic, and sprinkle on Italian parsley and half of the Parmigiano-Reggiano cheese; stir until combined.</span></li>
+                                <li><span>Serve pasta topped with the remaining Parmigiano-Reggiano cheese.</span></li>
                             </ol>
                         </div>
                     </div>

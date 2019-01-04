@@ -1,40 +1,47 @@
 import * as React from "react";
-import "./../assets/scss/CookingPage.scss";
-import RecipeCarousel from "./RecipeCarousel";
-import CookingHeader from "./CookingHeader";
-import { Link } from "react-router-dom";
+import { inject, observer } from 'mobx-react'
 
-const reactLogo = require("./../assets/img/react_logo.svg");
+import "./../assets/scss/CookingPage.scss";
+import CookingHeader from "./CookingHeader";
+import { RootStore } from '../stores/RootStore'
+import { inject } from "mobx-react";
 
 export interface CookingPageProps {
+    match: any;
+    store: RootStore;
 }
 
+@inject('store')
+@observer
 export default class CookingPage extends React.Component<CookingPageProps, undefined> {
-
-    steps: string[] = [
-        'Bring a large pot of lightly salted water to a boil.',
-        'Cook spaghetti in the boiling water, stirring occasionally until cooked through but firm to the bite, about 12 minutes.',
-        'Drain and transfer to a pasta bowl.',
-        'Combine garlic and olive oil in a cold skillet.',
-        'Cook over medium heat to slowly toast garlic, about 10 minutes.',
-        'Reduce heat to medium-low when olive oil begins to bubble.',
-        'Cook and stir until garlic is golden brown, about another 5 minutes. Remove from heat.',
-        'Stir red pepper flakes, black pepper, and salt into the pasta.',
-        'Pour in olive oil and garlic, and sprinkle on Italian parsley and half of the Parmigiano-Reggiano cheese; stir until combined.',
-        'Serve pasta topped with the remaining Parmigiano-Reggiano cheese.',
-        'Enjoy!'
-    ];
 
     currentStep: number = 0;
 
+    enableSound: boolean = false;
+
+    toggleSound = (newEnableSound: boolean) => {
+        this.enableSound = newEnableSound;
+    }
+
     goToNextStep = () => {
         this.currentStep++;
+        this.speakCurrentStep();
     }
 
     goToPreviousStep = () => {
         if (this.currentStep > 0) this.currentStep--;
+        this.speakCurrentStep();
     }
     
+    speakCurrentStep = () => {
+        if (this.enableSound) {
+            let msg = new SpeechSynthesisUtterance(this.steps[this.currentStep]);
+            const voices = window.speechSynthesis.getVoices();
+            if (voices[32]) msg.voice = voices[32];
+            window.speechSynthesis.speak(msg);
+        }
+    }
+
     componentDidMount() {
         document.addEventListener('keydown', (e) => {
             if (e.keyCode === 39) {
@@ -42,18 +49,28 @@ export default class CookingPage extends React.Component<CookingPageProps, undef
             } else if (e.keyCode === 37) {
                 this.goToPreviousStep();
             }
-        });         
+        });
+    }
+
+    steps = (): Step[] => {
+        const itemId = this.props.match.params.id
+        console.log(this.props.store!.itemStore.items.get(itemId).steps)
+        return this.props.store!.itemStore.items.get(itemId).steps
+    }
+
+    getProgressAsPercentage = () => {
+        return Math.floor((this.currentStep / (this.steps.length - 1)) * 100) + '%'
     }
 
     render() {
         return (
             <div className="app">
-                <CookingHeader />
+                <CookingHeader isEnabled={this.enableSound} onToggleSound={this.toggleSound} />
 
                 <div className="content">
                     <div className="card">
                         <h2>
-                            {this.steps[this.currentStep]}
+                            {this.steps()[this.currentStep].description}
                         </h2>
                     </div>
                 </div>
@@ -62,9 +79,13 @@ export default class CookingPage extends React.Component<CookingPageProps, undef
                     <a href="#" onClick={() => this.goToPreviousStep()} className="previous-button">&larr;</a>
                 }
 
-                {this.currentStep < (this.steps.length - 1) &&
+                {this.currentStep < (this.steps().length - 1) &&
                     <a href="#" onClick={() => this.goToNextStep()} className="next-button">&rarr;</a>
                 }
+
+                <div className="progress-bar">
+                    <div className="completed-progress" style={{ width: this.getProgressAsPercentage() }}></div>
+                </div>
             </div>
         );
     }

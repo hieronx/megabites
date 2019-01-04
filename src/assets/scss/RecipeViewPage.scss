@@ -1,13 +1,29 @@
 .app {
-    font-family: helvetica, arial, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     padding: 0;
     margin: 0 20px;
+
+    h2 {
+        font-family: 'Archivo Black', serif;
+        font-weight: normal;
+    }
   }
 
 .sm-content {
     width: 1100px;
     margin: 0 auto 60px auto;
 }
+
+
+
+.inline-card {
+    border-radius: 6px;
+    box-shadow: 0 8px 24px 0 rgba(0,0,0,0.12);
+    padding: 20px 40px;
+    margin: 20px;
+    background: #FFF;
+}
+
   
 .top-box {
     display: flex;
@@ -20,6 +36,8 @@
 
     .photos {
         flex: 2;
+        padding: 20px 40px;
+        margin: 20px;
     }
 }
 
@@ -54,10 +72,11 @@
 }
 .secondary-images {
     width: 500px;
+    display: flex;
 
     img {
         margin-right: 10px;
-        width: 31%;
+        flex: 1;
         height: 100px;
         object-fit: cover;
 
@@ -78,8 +97,15 @@ ul {
 ol {
     max-width: 60%;
     li {
-        font-size: 13px;
-        line-height: 20px;
+        font-size: 30px;
         margin-bottom: 10px;
+        font-family: 'Archivo Black', serif;
+        font-weight: normal;
+
+        span {
+            font-size: 13px;
+            line-height: 20px;
+            font-family: 'Open Sans', sans-serif;
+        }
     }
 }

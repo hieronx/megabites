@@ -9,6 +9,12 @@ $moveRight: $tileWidth * ($growFactor - 1);
 
 section {
     height: $tileHeight + 80px;
+
+    h2 {
+        font-family: 'Archivo Black', serif;
+        font-weight: normal;
+        font-size: 20px;
+    }
 }
 
 a:link, a:hover, a:active, a:visited {

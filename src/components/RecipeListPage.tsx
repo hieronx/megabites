@@ -1,24 +1,28 @@
 import * as React from "react";
+import { inject, observer } from 'mobx-react'
+
+import { RootStore } from '../stores/RootStore'
+import { List } from '../stores/ListStore'
 import "./../assets/scss/RecipeListPage.scss";
 import RecipeCarousel from "./RecipeCarousel";
 import MainHeader from "./MainHeader";
 
-const reactLogo = require("./../assets/img/react_logo.svg");
-
-export interface RecipeListPageProps {
+export interface Props {
+    store: RootStore;
 }
 
-export default class RecipeListPage extends React.Component<RecipeListPageProps, undefined> {
+@inject("store")
+@observer
+export default class RecipeListPage extends React.Component<Props, undefined> {
     render() {
         return (
             <div className="app">
                 <MainHeader />
 
                 <div className="content">
-                    <RecipeCarousel />
-                    <RecipeCarousel />
-                    <RecipeCarousel />
-                    <RecipeCarousel />
+                    {this.props.store!.listStore.list.map((list: List) =>
+                        <RecipeCarousel name={list.name} items={this.props.store!.itemStore.byListId(list.id)} />
+                    )}
                 </div>
             </div>
         );

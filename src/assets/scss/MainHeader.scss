@@ -3,6 +3,11 @@ header {
   
     .logo {
       flex: 2;
+      h1 {
+        font-family: 'Archivo Black', serif;
+        font-weight: normal;
+        font-size: 40px;
+      }
     }
   
     .nav {
