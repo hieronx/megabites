@@ -5,20 +5,15 @@ import "./../assets/scss/CookingPage.scss";
 import CookingHeader from "./CookingHeader";
 import { Step, Timer } from '../stores/ItemStore'
 import { RootStore } from '../stores/RootStore'
-import { inject } from "mobx-react";
 
 interface Props {
     match: any;
     store: RootStore;
 }
 
-interface Timer {
-
-}
-
 interface State {
-    timer: Timer | null;
-    startedTimerAt: Date | null;
+    timer: Timer;
+    startedTimerAt: Date;
     minutesRemaining: number;
     secondsRemaining: number;
 }
@@ -32,7 +27,7 @@ export default class CookingPage extends React.Component<Props, State> {
     enableSound: boolean = false;
 
     state: {
-        timer: null;
+        timer: { name: '', duration: 0 };
         startedTimerAt: null;
         minutesRemaining: 0;
         secondsRemaining: 0;
@@ -48,8 +43,8 @@ export default class CookingPage extends React.Component<Props, State> {
         });
         
         setInterval(() => {
-            if (this.state && this.state.timer && this.state.startedTimerAt) {
-                const time = Math.floor(this.state.timer.duration - (Math.abs(new Date() - this.state.startedTimerAt!) / 1000))
+            if (this.state && this.state.timer && this.state.startedTimerAt && this.state.timer.duration > 0) {
+                const time = Math.floor(this.state!.timer!.duration - (Math.abs((new Date() as any) - (this.state.startedTimerAt && this.state.startedTimerAt ? this.state.startedTimerAt : new Date() as any)) / 1000))
 
                 if (time <= 0) {
                     this.setState({ timer: null })
@@ -68,10 +63,6 @@ export default class CookingPage extends React.Component<Props, State> {
     }
 
     goToNextStep = () => {
-        if (this.currentStep().backgroundTimer) {
-            this.setState({ timer: this.currentStep().backgroundTimer, startedTimerAt: new Date() })
-        }
-
         this.stepIndex++;
         this.speakCurrentStep();
     }
@@ -87,6 +78,12 @@ export default class CookingPage extends React.Component<Props, State> {
             const voices = window.speechSynthesis.getVoices();
             if (voices[32]) msg.voice = voices[32];
             window.speechSynthesis.speak(msg);
+        }
+    }
+
+    startTimer = () => {
+        if (this.currentStep().backgroundTimer) {
+            this.setState({ timer: this.currentStep().backgroundTimer, startedTimerAt: new Date() })
         }
     }
 
@@ -122,7 +119,11 @@ export default class CookingPage extends React.Component<Props, State> {
                         </h2>
 
                         {this.currentStep() && this.currentStep().expandedSteps && this.currentStep().expandedSteps.length > 0 &&
-                            <a onClick={() => this.expandCurrentStep()}>Expand this step</a>
+                            <a onClick={() => this.expandCurrentStep()} className="btn-expand">Expand this step</a>
+                        }
+
+                        {this.currentStep().backgroundTimer &&
+                            <a onClick={() => this.startTimer()} className="btn-start-timer">Start a timer</a>
                         }
                     </div>
                 </div>
@@ -135,11 +136,10 @@ export default class CookingPage extends React.Component<Props, State> {
                     <a href="#" onClick={() => this.goToNextStep()} className="next-button">&rarr;</a>
                 }
 
-
                 <div className="timer">
                     {this.state && this.state.timer &&
                         <span>
-                            <span className="name">{this.state && this.state.timer && this.state.timer.name}</span>
+                            <span className="name">{this.state && this.state.timer && this.state!.timer!.name}</span>
                             <span className="timeLeft">{this.state.minutesRemaining}:{this.state.secondsRemaining}</span>
                         </span>
                     }

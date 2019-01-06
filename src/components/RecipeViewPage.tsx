@@ -3,14 +3,53 @@ import "./../assets/scss/RecipeViewPage.scss";
 import RecipeCarousel from "./RecipeCarousel";
 import MainHeader from "./MainHeader";
 import { Link } from "react-router-dom";
+import Gallery from 'react-photo-gallery';
+import Lightbox from 'react-images';
 
+const photos = [
+  { src: 'https://images.media-allrecipes.com/userphotos/560x315/3727226.jpg', width: 4, height: 3 },
+  { src: 'http://www.oliviascuisine.com/wp-content/uploads/2017/02/garlic-oil-spaghetti.jpg', width: 1, height: 1 },
+  { src: 'https://ips.plug.it/cips/buonissimo.org/cms/2012/01/spaghetti-aglio-olio-e-pane-fritto.jpg', width: 3, height: 2 },
+  { src: 'https://www.irishtimes.com/polopoly_fs/1.3017237.1490014825!/image/image.jpg_gen/derivatives/landscape_620/image.jpg', width: 4, height: 2 }
+];
 const reactLogo = require("./../assets/img/react_logo.svg");
 
 export interface RecipeViewPageProps {
     match: any;
 }
 
-export default class RecipeViewPage extends React.Component<RecipeViewPageProps, undefined> {
+interface State {
+    currentImage: number;
+    lightboxIsOpen: boolean;
+}
+
+export default class RecipeViewPage extends React.Component<RecipeViewPageProps, State> {
+
+    state = { currentImage: 0, lightboxIsOpen: false };
+
+    openLightbox = (event: any, obj: any) => {
+        this.setState({
+            currentImage: obj.index,
+            lightboxIsOpen: true,
+        });
+    }
+    closeLightbox = () => {
+        this.setState({
+            currentImage: 0,
+            lightboxIsOpen: false,
+        });
+    }
+    gotoPrevious = () => {
+        this.setState({
+            currentImage: this.state.currentImage - 1,
+        });
+    }
+    gotoNext = () => {
+        this.setState({
+            currentImage: this.state.currentImage + 1,
+        });
+    }
+
     render() {
         return (
             <div className="app">
@@ -35,12 +74,14 @@ export default class RecipeViewPage extends React.Component<RecipeViewPageProps,
                         </div>
 
                         <div className="photos">
-                           <img src="https://images.media-allrecipes.com/userphotos/560x315/3727226.jpg" className="primary-image" />
-                           <div className="secondary-images">
-                            <img src="http://www.oliviascuisine.com/wp-content/uploads/2017/02/garlic-oil-spaghetti.jpg" alt=""/>
-                            <img src="https://ips.plug.it/cips/buonissimo.org/cms/2012/01/spaghetti-aglio-olio-e-pane-fritto.jpg" alt=""/>
-                            <img src="https://www.irishtimes.com/polopoly_fs/1.3017237.1490014825!/image/image.jpg_gen/derivatives/landscape_620/image.jpg" alt=""/>
-                           </div>
+                            <Gallery photos={photos} onClick={this.openLightbox} />
+                            <Lightbox images={photos}
+                            onClose={this.closeLightbox}
+                            onClickPrev={this.gotoPrevious}
+                            onClickNext={this.gotoNext}
+                            currentImage={this.state.currentImage}
+                            isOpen={this.state.lightboxIsOpen}
+                            />
                         </div>
                     </div>
 

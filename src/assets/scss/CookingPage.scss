@@ -64,6 +64,25 @@ html,body {
     }
 }
 
+.btn-expand, .btn-start-timer {
+    background: #eee;
+    border-radius: 8px;
+    width: 200px;
+    margin: 0 auto 10px auto;
+    padding: 4px 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    color: #000;
+
+    &:hover {
+        background: #dedede;
+        color: #000;
+        text-decoration: none !important;
+    }
+}
+
 .previous-button {
     position: absolute;
     top: 40%;
@@ -72,7 +91,7 @@ html,body {
     padding: 20px;
     border-radius: 100%;
     font-size: 30px;
-    text-decoration: none;
+    text-decoration: none !important;
     color: #333;
 }
 
@@ -84,7 +103,7 @@ html,body {
     padding: 20px;
     border-radius: 100%;
     font-size: 30px;
-    text-decoration: none;
+    text-decoration: none !important;
     color: #333;
 }
 
